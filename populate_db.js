@@ -1,7 +1,7 @@
 // populate_db.js
 
 var mongoose = require('mongoose').connect('mongodb://localhost/quotes'),
-    Quote = require('./app/models/quote'),
+    Quote = require('./app/models/quote').Quote,
     x     = require('x-ray')(),
     url   = 'http://www.teslauniverse.com/nikola-tesla/quotes';
 
