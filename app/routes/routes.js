@@ -44,6 +44,21 @@ router.route('/tesla/quotes') //TODO
 		})
 	});
 
+router.route('/tesla/quotes/random')
+	.get(function(req, res) {
+		// tesla quotes are between 1 and 103 inclusive
+		// This could be better
+		var randn = Math.floor(Math.random() * (103 - 1) + 1);
+		Quote.findOne({'quote_id': randn}, function(err, result) {
+			if (err)
+				res.json({'err':err});
+			if ( null === result)
+				res.json({'message': 'received null value', 'randn':randn, 'count':count});
+			res.json(result);
+		});
+	});
+
+
 router.route('/tesla/quotes/:quote_id')
 	.get(function(req, res) {
 		// get quote by quote_number
@@ -76,5 +91,27 @@ router.route('/tesla/quotes/:quote_id')
 			res.json({'message':'Deleted Quote'});
 		})
 	});
+/*
+function random(){
+	var quote;
+	var randn;
+	console.log('Entered random function');
+	Quote.count({}, function(err, count){
+		if (err)
+			console.err(err);
+		randn = Math.floor(Math.random() * (count - 1) +1)
+		console.log('Random number is: ' + randn);
+
+	});
+	Quote.findOne({'quote_id': randn}, function (err, result){
+		if (err)
+			console.log(err);
+		quote = result;
+	});
+	console.log(quote);
+	console.log(randn);
+	return quote;
+
+} */
 
 module.exports = router;
