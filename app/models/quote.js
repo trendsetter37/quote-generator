@@ -8,4 +8,8 @@ var QuoteSchema = mongoose.Schema({
 },
 {collection: 'tesla'});
 
-module.exports = mongoose.model('Quote', QuoteSchema);
+module.exports = {
+	Quote : mongoose.model('Quote', QuoteSchema),
+	QuoteSchema : QuoteSchema,
+	mongoose : mongoose
+};
