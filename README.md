@@ -17,4 +17,4 @@ Route | Verb | Description
 
 
 
-[codepen]: http://codepen.io/trendsetter37/pen/ZbBeGW
+[codepen]: http://codepen.io/trendsetter37/full/ZbBeGW
