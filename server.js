@@ -7,7 +7,7 @@ var app = require('express')(),
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 9090;
+var port = 3000;
 
 // Route registry
 app.use('/api', router);
