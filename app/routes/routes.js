@@ -10,7 +10,7 @@ var express = require('express'),
 
 router.use(function(req, res, next){
   // some logging or could check authentication etc.
-  console.log('Got a request');
+  res.set('Access-Control-Allow-Origin', '*');
   next(); 
 });
 
