@@ -14,9 +14,11 @@ router.use(function(req, res, next){
 
   // Disable DELETE, PUT & POST request for now
   if ('GET' === req.method) {
+  	console.log('Received request @ ' + new Date());
   	next();
   }
   else {
+  	console.log('Blocked an inappropriate request : ' + new Date());
   	res.json({
   		author: 'Javis',
   		quote_id: 0,
@@ -37,7 +39,6 @@ router.use(function(req, res, next){
 	/api/tesla/random 		GET 			Get random quote from db
 */
 
-// Disable POST, PUT, and DELETE
 
 router.route('/tesla/quotes') //TODO
 	.get(function(req, res) {
