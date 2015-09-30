@@ -11,7 +11,19 @@ var express = require('express'),
 router.use(function(req, res, next){
   // some logging or could check authentication etc.
   res.set('Access-Control-Allow-Origin', '*');
-  next(); 
+
+  // Disable DELETE, PUT & POST request for now
+  if ('GET' === req.method) {
+  	next();
+  }
+  else {
+  	res.json({
+  		author: 'Javis',
+  		quote_id: 0,
+  		quote: req.method + ' requests to this API have been disabled for obvious reasons.'
+  	});
+  }
+  
 });
 
 /*
@@ -24,6 +36,8 @@ router.use(function(req, res, next){
 	/api/tesla/:quote_id    DELETE 			Delete a quote
 	/api/tesla/random 		GET 			Get random quote from db
 */
+
+// Disable POST, PUT, and DELETE
 
 router.route('/tesla/quotes') //TODO
 	.get(function(req, res) {
@@ -42,7 +56,7 @@ router.route('/tesla/quotes') //TODO
 		//console.log(quote);
 		quote.save(function(err){
 			if (err)
-				res.send(err);
+				res.json({'err':err});
 			res.json({ message: 'Quote created!', quote: quote });
 		})
 	});
