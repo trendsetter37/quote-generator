@@ -2,7 +2,7 @@
 This project serves as Backend api to a Codepen random quote generator
 
 ---
-###Api Endopoints
+###API Endpoints
 Route | Verb | Description
 --- | :---: | :---
 /api/tesla/quotes | GET | Get all the quotes
