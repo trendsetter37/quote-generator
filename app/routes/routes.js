@@ -22,21 +22,21 @@ router.use(function(req, res, next){
   	res.json({
   		author: 'Javis',
   		quote_id: 0,
-  		quote: req.method + ' requests to this API have been disabled for obvious reasons.'
+  		quote: req.method + ' requests using this HTTP Verb have been disabled for obvious reasons.'
   	});
   }
-  
+
 });
 
 /*
-	Route 					http verb		description
+	Route 								http verb		description
 	====================	=========		============
-	/api/tesla/quotes		GET 			Get all the quotes
-	/api/tesla/quotes 		POST 			Create a quote
-	/api/tesla/:quote_id 	GET 			Get a single quote
+	/api/tesla/quotes				GET 			Get all the quotes
+	/api/tesla/quotes 			POST 			Create a quote
+	/api/tesla/:quote_id 		GET 			Get a single quote
 	/api/tesla/:quote_id  	PUT 			Update a quote with new info
-	/api/tesla/:quote_id    DELETE 			Delete a quote
-	/api/tesla/random 		GET 			Get random quote from db
+	/api/tesla/:quote_id    DELETE 		Delete a quote
+	/api/tesla/random 			GET 			Get random quote from db
 */
 
 
@@ -45,12 +45,12 @@ router.route('/tesla/quotes') //TODO
 		// get all the quotes
 		Quote.find({}, function(err, results) {
 			if (err)
-				console.err(err);	
+				console.err(err);
 			res.json(results);
 		});
 	})
 	.post(function(req, res) {
-		var quote = new Quote(); 	
+		var quote = new Quote();
 		quote.author = req.body.author;
 		quote.quote_id = req.body.quote_id; // Ensure that there is a quote_id
 		quote.quote = req.body.quote;

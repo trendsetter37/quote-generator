@@ -11,9 +11,11 @@
     "mongoose-simple-random": "^0.3.3",
     "x-ray": "^2.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  },
   "scripts": {
-    "test": "node server.js",
+    "test": "node ./node_modules/mocha/mocha.js",
     "start": "node server.js"
   },
   "repository": {
