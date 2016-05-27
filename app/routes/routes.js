@@ -29,14 +29,15 @@ router.use(function(req, res, next){
 });
 
 /*
-	Route 								http verb		description
-	====================	=========		============
-	/api/tesla/quotes				GET 			Get all the quotes
-	/api/tesla/quotes 			POST 			Create a quote
-	/api/tesla/:quote_id 		GET 			Get a single quote
-	/api/tesla/:quote_id  	PUT 			Update a quote with new info
-	/api/tesla/:quote_id    DELETE 		Delete a quote
-	/api/tesla/random 			GET 			Get random quote from db
+	Route 													http verb		description
+	====================						=========		============
+	/api/tesla/random 								GET 			Get random quote from db
+	/api/tesla/quotes									GET 			Get all the quotes
+	/api/tesla/quotes 								POST 			Create a quote
+	/api/tesla/quotes/:quote_id				GET				Get single quote by id
+	/api/tesla/quotes/:quote_id 			GET 			Get a single quote
+	/api/tesla/quotes/:quote_id  			PUT 			Update a quote with new info
+	/api/tesla/quotes/:quote_id    		DELETE 		Delete a quote
 */
 
 
@@ -49,7 +50,7 @@ router.route('/tesla/quotes') //TODO
 			res.json(results);
 		});
 	})
-	.post(function(req, res) {
+	.post(function(req, res) { // Create quote
 		var quote = new Quote();
 		quote.author = req.body.author;
 		quote.quote_id = req.body.quote_id; // Ensure that there is a quote_id
