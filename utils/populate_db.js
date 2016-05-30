@@ -1,4 +1,4 @@
-// populate_db.js
+/* Deprecated, only used for initial loading of quotes */
 
 var mongoose = require('mongoose').connect('mongodb://localhost/quotes'),
     Quote = require('./app/models/quote').Quote,

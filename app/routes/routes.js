@@ -14,7 +14,7 @@ router.use(function(req, res, next){
 
   // Disable DELETE, PUT & POST request for now
   if ('GET' === req.method) {
-  	console.log('Received request @ ' + new Date());
+  	//console.log('Received request @ ' + new Date());
   	next();
   }
   else {
@@ -31,7 +31,7 @@ router.use(function(req, res, next){
 /*
 	Route 													http verb		description
 	====================						=========		============
-	/api/tesla/random 								GET 			Get random quote from db
+	/api/tesla/quotes/random 					GET 			Get random quote from db
 	/api/tesla/quotes									GET 			Get all the quotes
 	/api/tesla/quotes 								POST 			Create a quote
 	/api/tesla/quotes/:quote_id				GET				Get single quote by id
