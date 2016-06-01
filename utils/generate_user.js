@@ -1,23 +1,42 @@
 /* module to generate passwords for user authentication */
 var bcrypt = require('bcrypt');
 var config = require('config');
-require('../models/db');
-//var mongoose = require('mongoose');
+var mongoose = require('../app/models/db');
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   'user': String,
-  'pass': String
+  'pass': String,
+  'permissions': Array
 }, {collection: 'users'});
 var User = mongoose.model('User', UserSchema);
 
-//mongoose.connect(config.db.uri, OPTS);
 
-var makeUser = function(user, pass) {
+/**
+ * Takes credentials and optional permissions parameter and creates api user
+ *
+ * @param  {string} user
+ * @param  {string} pass        hash
+ * @param  {array} permissions  Array of strings. e.g. ['read', 'write', 'delete']
+ * @return {boolean}            Did we create a user?
+ */
+var makeUser = function(user, pass, permissions) {
   var hash = bcrypt.hashSync(pass, 10);
-  User.create({'user': user, 'pass': hash}, function(err, user) {
-    if (err) console.log(err);
-    console.log('Success: ');
+  var user = new User({
+    'user': user,
+    'pass': hash,
+  });
+  if (permissions) {
+    user.permissions = permissions;
+  }
+  user.save(function(err, user) {
+    if (err) {
+      console.log(err);
+      return false;
+    }
+
+    console.log('Success. New user: ');
     console.log(user);
+    return true;
   });
 };
 
