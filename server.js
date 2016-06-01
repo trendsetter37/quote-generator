@@ -1,6 +1,5 @@
 // server.js
 var app = require('express')(),
-	mongoose = require('mongoose'),
   config = require('config'),
 	bodyParser = require('body-parser'),
 	router = require('./app/routes/routes'),
@@ -11,7 +10,6 @@ const PORT = config.port || 3000;
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.set('secret', config.secret);
 app.use('/api', router);
 
 // Starting server

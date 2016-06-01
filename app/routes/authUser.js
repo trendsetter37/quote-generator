@@ -1,5 +1,4 @@
-var mongoose = require('../models/db'),
-    bcrypt = require('bcrypt'),
+var bcrypt = require('bcrypt'),
     config = require('config'),
     jwt = require('jsonwebtoken'),
     User = require('../models/user').User;
@@ -9,15 +8,22 @@ const DAY = 60 * 60 * 24;
 const WEEK = DAY * 7;
 const MILLI = 1000;
 
+/**
+ * Authenticate user. Credentials should be passed using the body of a POST
+ * request.
+ *
+ * @param  {object} req request object
+ * @param  {object} res response object
+ * @return {json}       Does not return a value but will send an informative
+ *                      json response to client.
+ */
 var userAuth = function (req, res) {
   var method = req.method;
   var user = req.body.user;
   var pass = req.body.pass;
-  var status = res.statusCode;
-  console.log('req method: ' + method);
 
   if ('POST' !== method)
-    res.json({msg: 'POST method must be used for /authenticate endpoint.'})
+    res.json({msg: 'POST method must be used for /api/authenticate endpoint.'});
 
   User.findOne({'user': user})
     .exec(function(err, doc) {
@@ -41,7 +47,7 @@ var userAuth = function (req, res) {
 };
 
 /**
- * Convert Date's millisecond output to seconds.
+ * Returns current date since Unix epoch in seconds.
  *
  * @return {integer} seconds
  */
@@ -52,8 +58,9 @@ var currentTime = function() {
 /**
  * Fetch token after validating credentials.
  *
- * @param  {object} user contains user information
- * @return {string}      signed token
+ * @param  {string} user          username for client device or site
+ * @param  {array}  permissions   list of desired permissions for client
+ * @return {string}               signed token
  */
 var fetchToken = function(user, permissions) {
 

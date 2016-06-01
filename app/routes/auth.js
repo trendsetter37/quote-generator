@@ -1,12 +1,14 @@
 var router = require('express').Router(),
     config = require('config'),
-    jwt = require('jsonwebtoken'),
-    isEmpty = require('lodash.isempty');
+    jwt = require('jsonwebtoken');
 
 
 /**
- * Authenticata a user. The authUser middleware will either generate a fresh
- * token or check a given token for validity.
+ * User authentication.
+ *
+ * The authUser middleware will check a given token for validity.
+ * Each api request will need the x-Auth-token header set to a valid token (jwt)
+ * for successful authentication.
  *
  * @param  {object}    request
  * @param  {object}    response
@@ -42,5 +44,4 @@ var checkToken =  function(token) {
   }
 };
 
-//router.use('/', authFunc);
 module.exports = authFunc;

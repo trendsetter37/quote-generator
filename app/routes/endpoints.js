@@ -1,9 +1,8 @@
 var router = require('express').Router();
     quote = require('../models/quote'),
-    random = require('mongoose-simple-random'),
     QuoteSchema = quote.QuoteSchema,
     Quote = quote.Quote,
-    RandomQuote = quote.mongoose.model('RandomQuote', QuoteSchema.plugin(random));
+    RandomQuote = quote.RandomQuote;
 
   /*
   	Route 													http verb		description

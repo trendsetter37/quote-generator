@@ -2,6 +2,11 @@
   "name": "tesla-quote-generator",
   "version": "1.0.0",
   "description": "Serves as an api backend for a codepen random quote generator",
+  "author": {
+    "name": "Javis Sullivan",
+    "email": "javissullivan@gmail.com"
+  },
+  "contributors": [],
   "main": "server.js",
   "dependencies": {
     "bcrypt": "^0.8.6",
@@ -10,7 +15,6 @@
     "config": "^1.20.4",
     "express": "^4.0.0",
     "jsonwebtoken": "^7.0.0",
-    "lodash.isempty": "^4.2.1",
     "mongoose": "4.1.9",
     "mongoose-simple-random": "^0.3.3",
     "morgan": "^1.7.0",
