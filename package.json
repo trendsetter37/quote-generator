@@ -4,18 +4,21 @@
   "description": "Serves as an api backend for a codepen random quote generator",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^0.8.6",
     "body-parser": "^1.0.2",
     "cheerio": "^0.19.0",
     "config": "^1.20.4",
     "express": "^4.0.0",
     "jsonwebtoken": "^7.0.0",
+    "lodash.isempty": "^4.2.1",
     "mongoose": "4.1.9",
     "mongoose-simple-random": "^0.3.3",
     "morgan": "^1.7.0",
     "x-ray": "^2.0.2"
   },
   "devDependencies": {
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "node-uuid": "^1.4.7"
   },
   "scripts": {
     "test": "node ./node_modules/mocha/mocha.js",

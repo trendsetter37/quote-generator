@@ -1,12 +1,11 @@
 // app/models/quote.js
 
-var mongoose = require('mongoose');
+var mongoose = require('./db');
 var QuoteSchema = mongoose.Schema({
     quote: String,
     author: String,
     quote_id: Number
-},
-{collection: 'tesla'});
+}, {collection: 'tesla'});
 
 module.exports = {
 	Quote : mongoose.model('Quote', QuoteSchema),
