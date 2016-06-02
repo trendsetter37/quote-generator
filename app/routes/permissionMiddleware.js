@@ -4,7 +4,7 @@ var checkWritePerms = function (req, res, next) {
   if (req.perms.indexOf('write') > NOT_FOUND) {
     next();
   } else {
-    res.json({msg: 'You do not have write permissions.'});
+    res.status(401).json({msg: 'You do not have write permissions.'});
   }
 };
 
@@ -12,7 +12,7 @@ var checkDeletePerms = function (req, res, next) {
   if (req.perms.indexOf('delete') > NOT_FOUND) {
     next();
   } else {
-    res.json({msg: 'You do not have delete permissions.'});
+    res.status(401).json({msg: 'You do not have delete permissions.'});
   }
 };
 

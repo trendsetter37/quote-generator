@@ -20,11 +20,43 @@ var router = require('express').Router();
   */
 
 router.route('/quotes')
+  /**
+   * @api {get} /api/tesla/quotes Request all quotes
+   * @apiName GetQuotes
+   * @apiGroup  Quotes
+   *
+   * @apiSuccess  {String}  author    Quote author
+   * @apiSuccess  {String}  quote_id  Quote ID
+   * @apiSuccess  {String}  quote     Quote contents
+   *
+   * @apiSuccessExample Success-Response:
+   * GET /api/tesla/quotes 200
+   * [
+   * 	{
+   * 		"_id": "560af6556a83bfe9094855b3",
+   * 		"quote_id": "101",
+   * 		"quote": "One of the great events ...",
+   * 		"author": "Nikola Tesla",
+   * 		"__v": 0
+   * 	},
+   * 	{
+   * 		"_id": "560af6556a83bfe9094855b2",
+   * 		"quote_id": "102",
+   * 		"quote": "Power can be, and at...",
+   * 		"author": "Nikola Tesla",
+   * 		"__v": 0
+   * 	},
+   * 	...
+   * ]
+   *
+   *
+   *
+   */
 	.get(function(req, res) {
 		Quote.find({}, function(err, results) {
 			if (err) {
 				console.err(err);
-        res.json(err);
+        res.status(500).json({'err': err});
       } else {
         res.json(results);
       }
@@ -38,7 +70,7 @@ router.route('/quotes')
 		quote.quote = req.body.quote;
 		quote.save(function(err){
 			if (err) {
-				res.json({'err':err});
+				res.status(500).json({'err':err});
       } else {
           res.json({ msg: 'Quote created!', quote: quote });
       }
@@ -48,9 +80,11 @@ router.route('/quotes')
 router.route('/quotes/random')
 	.get(function(req, res) {
 		RandomQuote.findOneRandom(function(err, result){
-			if (err)
-				res.json({'err':err});
-			res.json(result);
+			if (err) {
+        res.status(500).json({'err':err});
+      } else {
+        res.json(result);
+      }
 		});
 	});
 
@@ -58,9 +92,9 @@ router.route('/quotes/:quote_id')
 	.get(function(req, res) {
 		Quote.findOne({'quote_id':req.params.quote_id}, function(err, result){
 			if (err) {
-				res.json({'err':err});
+				res.status(500).json({'err':err});
       } else if (null === result) {
-				res.json({'err':'Quote ' + req.params.quote_id + ' Does not exist'});
+				res.status(404).json({'msg':'Quote ' + req.params.quote_id + ' Does not exist'});
       } else {
           res.json(result);
       }
@@ -69,29 +103,32 @@ router.route('/quotes/:quote_id')
 	.put(checkWrite, function(req, res) {
 
 		Quote.findOne({'quote_id':req.params.quote_id}, function(err, result) {
-			if (err)
-				res.send(err);
-			if (null === result)
-				res.json({'err':'Quote ' + req.params.quote_id + ' Does not exist'});
-
-			for (thing in req.body) {
-				result[thing] = req.body[thing];
-			}
-			result.save(function(err){
-				if (err) {
-					res.json({'err':err});
-        } else {
-          res.json({msg: 'Quote Updated!'});
+			if (err) {
+        res.status(500).json(err);
+      } else if (null === result) {
+        res.status(404).json(
+          {'msg':'Quote ' + req.params.quote_id + ' Does not exist'}
+        );
+      } else {
+        for (thing in req.body) {
+          result[thing] = req.body[thing];
         }
-			});
-		});
+        result.save(function(err){
+  				if (err) {
+  					res.status(500).json({'err':err});
+          } else {
+            res.sendStatus(204);
+          }
+  			});
+      }
+    });
 	})
 	.delete(checkDel, function(req, res) {
 		Quote.remove({'quote_id':req.params.quote_id}, function(err, result) {
 			if (err) {
-				res.json({'err':err});
+				res.status(500).json({'err':err});
       } else {
-        res.json({'message':'Deleted Quote'});
+        res.sendStatus(204);
       }
 		});
 	});
