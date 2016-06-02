@@ -22,28 +22,29 @@ var userAuth = function (req, res) {
   var user = req.body.user;
   var pass = req.body.pass;
 
-  if ('POST' !== method)
+  if ('POST' !== method) {
     res.json({msg: 'POST method must be used for /api/authenticate endpoint.'});
-
-  User.findOne({'user': user})
-    .exec(function(err, doc) {
-      if (err) {
-        res.json({err: err});
-      }
-
-      if (doc) {
-        var authenticated = bcrypt.compareSync(pass, doc.pass);
-        if(authenticated) {
-          // TODO(@jsullivan): Add in extra permissions functionality
-          var token = fetchToken(doc.user, doc.permissions);
-          res.json({ 'token': token, 'msg': 'Successful auth' });
-        } else {
-          res.json({ 'msg': 'Incorrect password.' });
+  } else {
+    User.findOne({'user': user})
+      .exec(function(err, doc) {
+        if (err) {
+          res.json({err: err});
         }
-      } else {
-        res.json({'msg': 'User: ' + user + ' not found.'});
-      }
-  });
+
+        if (doc) {
+          var authenticated = bcrypt.compareSync(pass, doc.pass);
+          if(authenticated) {
+            // TODO(@jsullivan): Add in extra permissions functionality
+            var token = fetchToken(doc.user, doc.permissions);
+            res.json({ 'token': token, 'msg': 'Successful auth' });
+          } else {
+            res.json({ 'msg': 'Incorrect password.' });
+          }
+        } else {
+          res.json({'msg': 'User: ' + user + ' not found.'});
+        }
+    });
+  }
 };
 
 /**
