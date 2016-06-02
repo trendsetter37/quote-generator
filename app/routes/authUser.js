@@ -35,7 +35,7 @@ var userAuth = function (req, res) {
         var authenticated = bcrypt.compareSync(pass, doc.pass);
         if(authenticated) {
           // TODO(@jsullivan): Add in extra permissions functionality
-          var token = fetchToken(doc.user);
+          var token = fetchToken(doc.user, doc.permissions);
           res.json({ 'token': token, 'msg': 'Successful auth' });
         } else {
           res.json({ 'msg': 'Incorrect password.' });
@@ -69,14 +69,12 @@ var fetchToken = function(user, permissions) {
     iss: 'tesla-quote-generator',
     exp: currentTime() + FIVE_MIN,
     sub: user,
-    scope: ['read']
+    scope: []
   };
 
   // If there are extra permissions for user add them to scope array
   if (permissions) {
-    for(var val of permissions) {
-      claims.scope.push(val);
-    }
+    claims.scope = permissions;
   }
 
   return jwt.sign(claims, config.secret);

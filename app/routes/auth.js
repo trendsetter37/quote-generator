@@ -20,8 +20,10 @@ var authFunc = function (req, res, next) {
     var decodedToken = checkToken(token);
     var sub = decodedToken.sub;
     var iss = decodedToken.iss;
+    var permissions = decodedToken.scope;
 
     if (iss && iss === 'tesla-quote-generator' && sub) {
+      req.perms = permissions;
       next();
     } else {
       res.json({ 'msg': 'Not authenticated.' });

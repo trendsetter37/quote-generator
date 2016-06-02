@@ -2,7 +2,11 @@ var router = require('express').Router();
     quote = require('../models/quote'),
     QuoteSchema = quote.QuoteSchema,
     Quote = quote.Quote,
-    RandomQuote = quote.RandomQuote;
+    RandomQuote = quote.RandomQuote,
+    perms = require('./permissionMiddleware'),
+    checkDel = perms.checkDel,
+    checkWrite = perms.checkWrite;
+
 
   /*
   	Route 													http verb		description
@@ -18,12 +22,15 @@ var router = require('express').Router();
 router.route('/quotes')
 	.get(function(req, res) {
 		Quote.find({}, function(err, results) {
-			if (err)
+			if (err) {
 				console.err(err);
-			res.json(results);
+        res.json(err);
+      } else {
+        res.json(results);
+      }
 		});
 	})
-	.post(function(req, res) {
+	.post(checkWrite, function(req, res) {
 		var quote = new Quote();
 
 		quote.author = req.body.author;
@@ -50,14 +57,16 @@ router.route('/quotes/random')
 router.route('/quotes/:quote_id')
 	.get(function(req, res) {
 		Quote.findOne({'quote_id':req.params.quote_id}, function(err, result){
-			if (err)
+			if (err) {
 				res.json({'err':err});
-			if (null === result)
+      } else if (null === result) {
 				res.json({'err':'Quote ' + req.params.quote_id + ' Does not exist'});
-			res.json(result);
-		})
+      } else {
+          res.json(result);
+      }
+		});
 	})
-	.put(function(req, res) {
+	.put(checkWrite, function(req, res) {
 
 		Quote.findOne({'quote_id':req.params.quote_id}, function(err, result) {
 			if (err)
@@ -77,7 +86,7 @@ router.route('/quotes/:quote_id')
 			});
 		});
 	})
-	.delete(function(req, res) {
+	.delete(checkDel, function(req, res) {
 		Quote.remove({'quote_id':req.params.quote_id}, function(err, result) {
 			if (err) {
 				res.json({'err':err});

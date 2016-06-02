@@ -25,17 +25,14 @@ var makeUser = function(user, pass, permissions) {
     'user': user,
     'pass': hash,
   });
-  if (permissions) {
-    user.permissions = permissions;
-  }
+
+  user.permissions = permissions? permissions : ['read']
+
   user.save(function(err, user) {
     if (err) {
       console.log(err);
       return false;
     }
-
-    console.log('Success. New user: ');
-    console.log(user);
     return true;
   });
 };
@@ -46,7 +43,6 @@ var checkUser = function(user, pass) {
     .exec(function(err, usr) {
       result = bcrypt.compareSync(pass, usr.pass);
       console.log('Result: ' + result);
-
     });
 };
 
