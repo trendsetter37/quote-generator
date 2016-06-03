@@ -31,6 +31,9 @@ If not, you may receive one of the following JSON responses.
 
 ---
 ### API Endpoints
+
+API Documentation for these endpoints can be found [here](https://quote-generator-apidocs.surge.sh).
+
 Route | Verb | Description
 --- | :---: | :---
 /api/authenticate | POST | Authenticate with user and password
