@@ -44,6 +44,8 @@ Route | Verb | Description
 ---
 [Link][codepen] to working example.
 
-
+### Notes
+---
+Tokens are only valid for **5 minutes** at a time. Ensure that your client will re-authenticate upon receipt of a `not authenticated` error message to maintain a seamless stream of quotes.
 
 [codepen]: http://codepen.io/trendsetter37/full/ZbBeGW

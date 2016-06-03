@@ -8,26 +8,13 @@ var router = require('express').Router();
     checkWrite = perms.checkWrite;
 
 
-  /*
-  	Route 													http verb		description
-  	====================						=========		============
-  	/api/tesla/quotes/random 					GET 			Get random quote from db
-  	/api/tesla/quotes									GET 			Get all the quotes
-  	/api/tesla/quotes 								POST 			Create a quote
-  	/api/tesla/quotes/:quote_id				GET				Get single quote by id
-  	/api/tesla/quotes/:quote_id  			PUT 			Update a quote with new info
-  	/api/tesla/quotes/:quote_id    		DELETE 		Delete a quote
-  */
-
 router.route('/quotes')
   /**
    * @api {get} /api/tesla/quotes Request all quotes
    * @apiName GetQuotes
-   * @apiGroup  Quotes
+   * @apiGroup  RestAPI
    *
-   * @apiSuccess  {String}  author    Quote author
-   * @apiSuccess  {String}  quote_id  Quote ID
-   * @apiSuccess  {String}  quote     Quote contents
+   * @apiSuccess  {Array}  Array  List of quote objects
    *
    * @apiSuccessExample Success-Response:
    * GET /api/tesla/quotes 200
@@ -49,8 +36,6 @@ router.route('/quotes')
    * 	...
    * ]
    *
-   *
-   *
    */
 	.get(function(req, res) {
 		Quote.find({}, function(err, results) {
@@ -62,6 +47,27 @@ router.route('/quotes')
       }
 		});
 	})
+  /**
+   * @api {post} /api/tesla/posts  Create quote
+   * @apiName  CreateQuote
+   * @apiGroup  RestAPI
+   *
+   * @apiSuccess {String}  msg    Quote created
+   * @apiSuccess {Object}  quote  Created quote object
+   *
+   * @apiSuccessExample Success-Response
+   * POST /api/tesla/quotes 200
+   * {
+   * 	"msg": "Quote created!",
+   * 	"quote": {
+   * 		"_v": 0,
+   * 		"quote": "Creating api docs!",
+   * 		"quote_id": 339767,
+   * 		"author": "Javis Sullivan",
+   * 		"_id": "5750dbd6895161b24413b611"
+   * 	}
+   * }
+   */
 	.post(checkWrite, function(req, res) {
 		var quote = new Quote();
 
@@ -78,6 +84,26 @@ router.route('/quotes')
 	});
 
 router.route('/quotes/random')
+  /**
+   * @api {get} /api/tesla/quotes/randome  Get random quotes
+   * @apiName  RandomQuote
+   * @apiGroup RestAPI
+   *
+   * @apiSuccess  {String}  _id  Database ID
+   * @apiSuccess  {Integer} quote_id  Quote ID
+   * @apiSuccess  {String}  quote  Quote text
+   * @apiSuccess  {String}  author  Author name
+   *
+   * @apiSuccessExample  Success-Response
+   * GET /api/tesla/quotes/random
+   * {
+   * 	"_id": "560af6556a83bfe9094855d2",
+   * 	"quote_id": 70,
+   * 	"quote": ""What the result of these investigations will...",
+   * 	"author": "Nikola Tesla",
+   * 	"_v": 0
+   * }
+   */
 	.get(function(req, res) {
 		RandomQuote.findOneRandom(function(err, result){
 			if (err) {
@@ -89,6 +115,26 @@ router.route('/quotes/random')
 	});
 
 router.route('/quotes/:quote_id')
+  /**
+   * @api {get} /api/tesla/quotes/:quote_id  Get quote by ID
+   * @apiName  QuoteByID
+   * @apiGroup RestAPI
+   *
+   * @apiSuccess  {String}  Database ID
+   * @apiSuccess  {Integer} Quote ID
+   * @apiSuccess  {String}  Quote text
+   * @apiSuccess  {String}  Author name
+   *
+   * @apiSuccessExample  Success-Response
+   * GET /api/tesla/quotes/:quote_id  200
+   * {
+   * 	"_id": "560af6556a83bfe9094855d3",
+   * 	"quote_id": 69,
+   * 	"quote": "Our senses enable us to perceive only a ...",
+   * 	"author": "Nikola Tesla",
+   * 	"_v": 0
+   * }
+   */
 	.get(function(req, res) {
 		Quote.findOne({'quote_id':req.params.quote_id}, function(err, result){
 			if (err) {
@@ -100,6 +146,26 @@ router.route('/quotes/:quote_id')
       }
 		});
 	})
+  /**
+   * @api {put} /api/tesla/quotes/:quote_id  Update quote by ID
+   * @apiName  UpdateQuoteByID
+   * @apiGroup RestAPI
+   *
+   * @apiSuccess  {String}  _id  Database ID
+   * @apiSuccess  {Integer} quote_id  Quote ID
+   * @apiSuccess  {String}  quote  Quote text
+   * @apiSuccess  {String}  author  Author name
+   *
+   * @apiSuccessExample  Success-Response
+   * PUT /api/tesla/quotes/:quote_id  204
+   *
+   * @apiError  {String}  msg  Error message
+   * @apiErrorExample  Error-Response
+   * PUT /api/tesla/quotes/:quote_id  404
+   * {
+   * 	"msg": "Quote {quote_id} Does not exist"
+   * }
+   */
 	.put(checkWrite, function(req, res) {
 
 		Quote.findOne({'quote_id':req.params.quote_id}, function(err, result) {
@@ -123,6 +189,14 @@ router.route('/quotes/:quote_id')
       }
     });
 	})
+  /**
+   * @api {delete} /api/tesla/quotes/:quote_id  Delete quote by ID
+   * @apiName  DeleteQuoteByID
+   * @apiGroup RestAPI
+   *
+   * @apiSuccessExample
+   * DELETE /api/tesla/quotes/:quote_id  204
+   */
 	.delete(checkDel, function(req, res) {
 		Quote.remove({'quote_id':req.params.quote_id}, function(err, result) {
 			if (err) {
