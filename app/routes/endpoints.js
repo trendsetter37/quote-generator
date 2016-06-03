@@ -88,7 +88,7 @@ router.route('/quotes')
 
 router.route('/quotes/random')
   /**
-   * @api {get} /api/tesla/quotes/randome  Get random quotes
+   * @api {get} /api/tesla/quotes/random  Get random quotes
    * @apiName  RandomQuote
    * @apiVersion  1.1.0
    * @apiGroup Gets
