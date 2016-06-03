@@ -1,66 +1,30 @@
 define({ "api": [
   {
-    "type": "post",
-    "url": "/api/tesla/posts",
-    "title": "Create quote",
-    "name": "CreateQuote",
-    "group": "RestAPI",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "msg",
-            "description": "<p>Quote created</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "quote",
-            "description": "<p>Created quote object</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response",
-          "content": "POST /api/tesla/quotes 200\n{\n\t\"msg\": \"Quote created!\",\n\t\"quote\": {\n\t\t\"_v\": 0,\n\t\t\"quote\": \"Creating api docs!\",\n\t\t\"quote_id\": 339767,\n\t\t\"author\": \"Javis Sullivan\",\n\t\t\"_id\": \"5750dbd6895161b24413b611\"\n\t}\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "app/routes/endpoints.js",
-    "groupTitle": "RestAPI"
-  },
-  {
     "type": "delete",
     "url": "/api/tesla/quotes/:quote_id",
     "title": "Delete quote by ID",
     "name": "DeleteQuoteByID",
-    "group": "RestAPI",
+    "version": "1.1.0",
+    "group": "Deletes",
     "success": {
       "examples": [
         {
-          "title": "DELETE /api/tesla/quotes/:quote_id  204",
-          "content": "DELETE /api/tesla/quotes/:quote_id  204",
+          "title": "Success-Response",
+          "content": "DELETE /api/tesla/quotess/:quote_id",
           "type": "json"
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "app/routes/endpoints.js",
-    "groupTitle": "RestAPI"
+    "groupTitle": "Deletes"
   },
   {
     "type": "get",
     "url": "/api/tesla/quotes",
     "title": "Request all quotes",
     "name": "GetQuotes",
-    "group": "RestAPI",
+    "version": "1.1.0",
+    "group": "Gets",
     "success": {
       "fields": {
         "Success 200": [
@@ -81,16 +45,16 @@ define({ "api": [
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "app/routes/endpoints.js",
-    "groupTitle": "RestAPI"
+    "groupTitle": "Gets"
   },
   {
     "type": "get",
     "url": "/api/tesla/quotes/:quote_id",
     "title": "Get quote by ID",
     "name": "QuoteByID",
-    "group": "RestAPI",
+    "version": "1.1.0",
+    "group": "Gets",
     "success": {
       "fields": {
         "Success 200": [
@@ -120,21 +84,21 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response",
-          "content": "GET /api/tesla/quotes/:quote_id  200\n{\n\t\"_id\": \"560af6556a83bfe9094855d3\",\n\t\"quote_id\": 69,\n\t\"quote\": \"Our senses enable us to perceive only a ...\",\n\t\"author\": \"Nikola Tesla\",\n\t\"_v\": 0\n}",
+          "content": "GET /api/tesla/quotes/69  200\n{\n\t\"_id\": \"560af6556a83bfe9094855d3\",\n\t\"quote_id\": 69,\n\t\"quote\": \"Our senses enable us to perceive only a ...\",\n\t\"author\": \"Nikola Tesla\",\n\t\"_v\": 0\n}",
           "type": "json"
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "app/routes/endpoints.js",
-    "groupTitle": "RestAPI"
+    "groupTitle": "Gets"
   },
   {
     "type": "get",
     "url": "/api/tesla/quotes/randome",
     "title": "Get random quotes",
     "name": "RandomQuote",
-    "group": "RestAPI",
+    "version": "1.1.0",
+    "group": "Gets",
     "success": {
       "fields": {
         "Success 200": [
@@ -176,16 +140,53 @@ define({ "api": [
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "app/routes/endpoints.js",
-    "groupTitle": "RestAPI"
+    "groupTitle": "Gets"
+  },
+  {
+    "type": "post",
+    "url": "/api/tesla/posts",
+    "title": "Create quote",
+    "name": "CreateQuote",
+    "version": "1.1.0",
+    "group": "Posts",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>Quote created</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "quote",
+            "description": "<p>Created quote object</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "POST /api/tesla/quotes 200\n{\n\t\"msg\": \"Quote created!\",\n\t\"quote\": {\n\t\t\"_v\": 0,\n\t\t\"quote\": \"Creating api docs!\",\n\t\t\"quote_id\": 339767,\n\t\t\"author\": \"Javis Sullivan\",\n\t\t\"_id\": \"5750dbd6895161b24413b611\"\n\t}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/routes/endpoints.js",
+    "groupTitle": "Posts"
   },
   {
     "type": "put",
     "url": "/api/tesla/quotes/:quote_id",
     "title": "Update quote by ID",
     "name": "UpdateQuoteByID",
-    "group": "RestAPI",
+    "version": "1.1.0",
+    "group": "Puts",
     "success": {
       "fields": {
         "Success 200": [
@@ -247,8 +248,7 @@ define({ "api": [
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "app/routes/endpoints.js",
-    "groupTitle": "RestAPI"
+    "groupTitle": "Puts"
   }
 ] });

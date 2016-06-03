@@ -7,12 +7,14 @@ var router = require('express').Router();
     checkDel = perms.checkDel,
     checkWrite = perms.checkWrite;
 
+const SIX_DIGIT = 1000000;
 
 router.route('/quotes')
   /**
    * @api {get} /api/tesla/quotes Request all quotes
    * @apiName GetQuotes
-   * @apiGroup  RestAPI
+   * @apiVersion  1.1.0
+   * @apiGroup  Gets
    *
    * @apiSuccess  {Array}  Array  List of quote objects
    *
@@ -50,7 +52,8 @@ router.route('/quotes')
   /**
    * @api {post} /api/tesla/posts  Create quote
    * @apiName  CreateQuote
-   * @apiGroup  RestAPI
+   * @apiVersion  1.1.0
+   * @apiGroup  Posts
    *
    * @apiSuccess {String}  msg    Quote created
    * @apiSuccess {Object}  quote  Created quote object
@@ -87,7 +90,8 @@ router.route('/quotes/random')
   /**
    * @api {get} /api/tesla/quotes/randome  Get random quotes
    * @apiName  RandomQuote
-   * @apiGroup RestAPI
+   * @apiVersion  1.1.0
+   * @apiGroup Gets
    *
    * @apiSuccess  {String}  _id  Database ID
    * @apiSuccess  {Integer} quote_id  Quote ID
@@ -118,7 +122,8 @@ router.route('/quotes/:quote_id')
   /**
    * @api {get} /api/tesla/quotes/:quote_id  Get quote by ID
    * @apiName  QuoteByID
-   * @apiGroup RestAPI
+   * @apiVersion  1.1.0
+   * @apiGroup Gets
    *
    * @apiSuccess  {String}  Database ID
    * @apiSuccess  {Integer} Quote ID
@@ -126,7 +131,7 @@ router.route('/quotes/:quote_id')
    * @apiSuccess  {String}  Author name
    *
    * @apiSuccessExample  Success-Response
-   * GET /api/tesla/quotes/:quote_id  200
+   * GET /api/tesla/quotes/69  200
    * {
    * 	"_id": "560af6556a83bfe9094855d3",
    * 	"quote_id": 69,
@@ -149,7 +154,8 @@ router.route('/quotes/:quote_id')
   /**
    * @api {put} /api/tesla/quotes/:quote_id  Update quote by ID
    * @apiName  UpdateQuoteByID
-   * @apiGroup RestAPI
+   * @apiVersion  1.1.0
+   * @apiGroup Puts
    *
    * @apiSuccess  {String}  _id  Database ID
    * @apiSuccess  {Integer} quote_id  Quote ID
@@ -192,10 +198,12 @@ router.route('/quotes/:quote_id')
   /**
    * @api {delete} /api/tesla/quotes/:quote_id  Delete quote by ID
    * @apiName  DeleteQuoteByID
-   * @apiGroup RestAPI
+   * @apiVersion  1.1.0
+   * @apiGroup Deletes
    *
-   * @apiSuccessExample
-   * DELETE /api/tesla/quotes/:quote_id  204
+   * @apiSuccessExample Success-Response
+   * DELETE /api/tesla/quotess/:quote_id
+   *
    */
 	.delete(checkDel, function(req, res) {
 		Quote.remove({'quote_id':req.params.quote_id}, function(err, result) {
@@ -213,7 +221,7 @@ router.route('/quotes/:quote_id')
  * @return {integer}
  */
 var randomSixFig = function() {
-  return Math.floor(Math.random() * 1000000);
+  return Math.floor(Math.random() * SIX_DIGIT);
 };
 
 module.exports = router;
